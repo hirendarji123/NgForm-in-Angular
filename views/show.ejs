@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        
+        table {
+            text-align: center;
+        }
+        
+        th,
+        td {
+            padding: 7px;
+        }
+    </style>
+    <script>
+        setTimeout(function() {
+            location.reload();
+        }, 5000); // 3000 milliseconds means 3 seconds.
+    </script>
+</head>
+
+<body>
+    <main>
+        <h3>
+            List of IPs:
+        </h3>
+        <div>
+            <table>
+                <tr>
+                    <th>Server IP</th>
+                    <th>Connected Devices</th>
+                </tr>
+                <% for (let ip=0; ip<listIp.length; ip++) { %>
+                    <tr>
+                        <td>
+                            <%= listIp[ip] %>
+                        </td>
+                        <td>
+                            <%= deviceIp[ip] %>
+                        </td>
+                        <td>
+                            <form action="/remove-ip" method="POST">
+                                <input type="hidden" value="<%= listIp[ip] %>" name="oldIp">
+                                <button type="submit" onclick="console.log('<%= listIp[ip] %>')">Remove</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <% } %>
+            </table>
+        </div>
+        <h3>Total devices:
+            <%= totalDevice %>
+        </h3>
+        <h3>
+            <form action="/add-ip" method="post">
+                <input type="text" name="newIp">
+                <button type="submit">Add</button>
+            </form>
+        </h3>
+    </main>
+</body>

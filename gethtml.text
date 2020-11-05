@@ -1,0 +1,26 @@
+
+const url = 'https://yellow.local.ch/de/q?what=Zahnarzt&where=Baselland+%28Kanton%29&page=2&rid=lEWw';
+const curl = require("curl");
+const jsdom = require("jsdom");
+
+curl.get(url, null, (err,resp,body)=>{
+  if(resp.statusCode == 200){
+     parseData(body);
+  }
+  else{
+     //some error handling
+     console.log("error while fetching url");
+  }
+});
+
+function parseData(html){
+    const {JSDOM} = jsdom;
+    const dom = new JSDOM(html);
+    const $ = (require('jquery'))(dom.window);
+    $('.listing-container').each(function (index, value) {
+         console.log($(this).find('h2').find('.listing-title').html());
+         console.log($(this).find('.listing-address').html());
+         console.log($('ul.pagination :nth-last-child(2)').html())
+    });
+    
+}
